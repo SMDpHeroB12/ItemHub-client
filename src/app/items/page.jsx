@@ -27,7 +27,7 @@ export default function ItemsPage() {
     );
 
   return (
-    <section className="bg-base-100 text-base-content min-h-screen flex flex-col">
+    <section className="bg-base-100 text-base-content min-h-screen pt-20 flex flex-col">
       <div className="container mx-auto px-4 py-10 flex-1">
         <h1 className="text-3xl font-bold bg-base-100 text-base-content mb-6">
           Items

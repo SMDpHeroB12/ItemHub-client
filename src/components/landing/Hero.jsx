@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="container mx-auto px-4 pt-10 pb-12">
+    <section className="container mx-auto px-4 pt-30 pb-12">
       <div className="grid lg:grid-cols-2 gap-8 items-center">
         <div>
           <p className="badge badge-outline">Simple • Fast • Clean</p>

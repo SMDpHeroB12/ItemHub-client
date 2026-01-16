@@ -13,7 +13,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur shadow bg-base-100/70 border-b border-base-200/50  rounded-lg">
+    <nav className="fixed top-4 z-50 backdrop-blur shadow bg-base-100/70 border-b border-base-200/50 w-11/12 left-1/2 + -translate-x-1/2 rounded-lg">
       <div className="navbar container mx-auto px-4">
         <div className="navbar-start">
           <Link href="/" className=" text-xl font-bold">

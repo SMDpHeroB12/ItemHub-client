@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FaArrowCircleUp, FaMoon, FaSun } from "react-icons/fa";
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState("light");
@@ -19,13 +19,34 @@ export default function ThemeToggle() {
     document.documentElement.setAttribute("data-theme", newTheme);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <button
-      onClick={toggleTheme}
-      className="fixed right-4 top-1/2 -translate-y-1/2 z-50 btn btn-circle "
-      aria-label="Toggle theme"
-    >
-      {theme === "light" ? <FaMoon /> : <FaSun />}
-    </button>
+    <div className="fixed right-4 bottom-4 z-50 flex flex-col gap-3">
+      {/* Go to Top */}
+      <button
+        onClick={scrollToTop}
+        className="btn btn-circle"
+        title="Go to Top"
+        aria-label="Go to top"
+      >
+        <FaArrowCircleUp />
+      </button>
+
+      {/* Theme Toggle */}
+      <button
+        onClick={toggleTheme}
+        className="btn btn-circle"
+        aria-label="Toggle theme"
+        title="Toggle Theme"
+      >
+        {theme === "light" ? <FaMoon /> : <FaSun />}
+      </button>
+    </div>
   );
 }
