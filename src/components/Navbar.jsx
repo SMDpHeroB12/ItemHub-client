@@ -1,22 +1,41 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { navLinks } from "@/config/navLinks";
+import Logo from "./Logo";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
+  const isActive = (href) => {
+    return pathname === href;
+  };
+
   return (
-    <header className="sticky top-0 z-50 backdrop-blur bg-base-100/70 border-b border-base-200/50">
-      <div className="navbar max-w-6xl mx-auto px-4">
+    <nav className="sticky top-0 z-50 backdrop-blur shadow bg-base-100/70 border-b border-base-200/50  rounded-lg">
+      <div className="navbar container mx-auto px-4">
         <div className="navbar-start">
-          <Link href="/" className="btn btn-ghost text-xl font-bold">
-            ItemHub
+          <Link href="/" className=" text-xl font-bold">
+            <Logo />
           </Link>
         </div>
 
         {/* Desktop */}
         <div className="navbar-center hidden md:flex">
-          <ul className="menu menu-horizontal px-1">
+          <ul className="menu menu-horizontal px-1 gap-3">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <Link href={link.href}>{link.label}</Link>
+                <Link
+                  href={link.href}
+                  className={
+                    isActive(link.href)
+                      ? "font-semibold text-primary btn"
+                      : "text-base-content btn btn-ghost"
+                  }
+                >
+                  {link.label}
+                </Link>
               </li>
             ))}
           </ul>
@@ -38,7 +57,16 @@ export default function Navbar() {
             >
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href}>{link.label}</Link>
+                  <Link
+                    href={link.href}
+                    className={
+                      isActive(link.href)
+                        ? "font-semibold text-primary"
+                        : "text-base-content"
+                    }
+                  >
+                    {link.label}
+                  </Link>
                 </li>
               ))}
               <li>
@@ -48,6 +76,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-    </header>
+    </nav>
   );
 }

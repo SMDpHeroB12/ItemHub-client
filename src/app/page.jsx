@@ -1,17 +1,21 @@
-import Image from "next/image";
+import Hero from "@/components/landing/Hero";
+import Stats from "@/components/landing/Stats";
+import Features from "@/components/landing/Features";
+import HowItWorks from "@/components/landing/HowItWorks";
+import FeaturedItems from "@/components/landing/FeaturedItems";
+import Testimonials from "@/components/landing/Testimonials";
+import FaqCta from "@/components/landing/FaqCta";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="p-6">
-      <Image
-        className="dark:invert"
-        src="/next.svg"
-        alt="Next.js logo"
-        width={100}
-        height={20}
-        priority
-      />
-      <button className="btn btn-primary mt-10">ItemHub Button</button>
-    </main>
+    <div className="bg-base-200 text-base-content ">
+      <Hero />
+      <Stats />
+      <Features />
+      <HowItWorks />
+      <FeaturedItems />
+      <Testimonials />
+      <FaqCta />
+    </div>
   );
 }
