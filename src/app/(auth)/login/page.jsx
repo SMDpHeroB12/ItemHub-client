@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -109,10 +110,10 @@ export default function LoginPage() {
 
         <button
           onClick={handleGoogleLogin}
-          className="btn btn-outline w-full mt-3"
+          className="btn  w-full mt-3"
           disabled={loading}
         >
-          Continue with Google
+          <FcGoogle size={25} /> Continue with Google
         </button>
       </div>
     </section>

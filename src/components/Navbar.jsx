@@ -6,6 +6,7 @@ import { navLinks } from "@/config/navLinks";
 import Logo from "./Logo";
 import { signOut, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -23,7 +24,7 @@ export default function Navbar() {
   const isLoggedIn = !!session?.user;
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 backdrop-blur shadow bg-base-100/70 border-b border-base-200/50 w-11/12 max-w-6xl rounded-lg">
+    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 backdrop-blur shadow bg-base-100/70 border-b border-base-200/50 w-11/12 container rounded-lg">
       <div className="navbar px-4">
         <div className="navbar-start">
           <Link href="/" className="text-xl font-bold">
@@ -62,10 +63,24 @@ export default function Navbar() {
             <span className="loading loading-spinner loading-sm" />
           ) : isLoggedIn ? (
             <>
+              <Image
+                width={40}
+                height={40}
+                alt="User Avatar"
+                title={session.user?.name}
+                src={
+                  session.user?.image ||
+                  "https://i.ibb.co.com/7xwWQvM3/user-circles.png"
+                }
+                className="rounded-full mr-2 w-10 h-10"
+              ></Image>
               <span className="hidden sm:inline text-sm text-base-content/70">
                 {session.user?.name || session.user?.email}
               </span>
-              <button onClick={handleLogout} className="btn btn-sm btn-outline">
+              <button
+                onClick={handleLogout}
+                className="btn btn-sm btn-secondary"
+              >
                 Logout
               </button>
             </>
