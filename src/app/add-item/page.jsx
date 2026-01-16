@@ -71,6 +71,24 @@ export default function AddItemPage() {
       </section>
     );
   }
+  const handleDemoLogin = async () => {
+    setLoading(true);
+
+    const res = await signIn("credentials", {
+      email: "test@itemhub.com",
+      password: "123456",
+      redirect: false,
+    });
+
+    setLoading(false);
+
+    if (res?.ok) {
+      toast.success("Demo login successful!");
+      router.push("/items");
+    } else {
+      toast.error("Demo login failed");
+    }
+  };
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-10 pt-30">

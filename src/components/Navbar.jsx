@@ -4,19 +4,29 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navLinks } from "@/config/navLinks";
 import Logo from "./Logo";
+import { signOut, useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { data: session, status } = useSession();
 
-  const isActive = (href) => {
-    return pathname === href;
+  const isActive = (href) => pathname === href;
+
+  const handleLogout = async () => {
+    toast.success("Logged out!");
+    await signOut({ callbackUrl: "/" });
   };
 
+  // while session is loading (avoid UI flicker)
+  const isLoading = status === "loading";
+  const isLoggedIn = !!session?.user;
+
   return (
-    <nav className="fixed top-4 z-50 backdrop-blur shadow bg-base-100/70 border-b border-base-200/50 w-11/12 left-1/2 + -translate-x-1/2 rounded-lg">
-      <div className="navbar container mx-auto px-4">
+    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 backdrop-blur shadow bg-base-100/70 border-b border-base-200/50 w-11/12 max-w-6xl rounded-lg">
+      <div className="navbar px-4">
         <div className="navbar-start">
-          <Link href="/" className=" text-xl font-bold">
+          <Link href="/" className="text-xl font-bold">
             <Logo />
           </Link>
         </div>
@@ -24,54 +34,91 @@ export default function Navbar() {
         {/* Desktop */}
         <div className="navbar-center hidden md:flex">
           <ul className="menu menu-horizontal px-1 gap-3">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className={
-                    isActive(link.href)
-                      ? "font-semibold text-primary btn"
-                      : "text-base-content btn btn-ghost"
-                  }
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              // ✅ Hide Add Item when not logged in
+              if (link.href === "/add-item" && !isLoggedIn) return null;
+
+              return (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={
+                      isActive(link.href)
+                        ? "btn btn-sm btn-primary"
+                        : "btn btn-sm btn-ghost text-base-content"
+                    }
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
 
         <div className="navbar-end gap-2">
-          <Link href="/login" className="btn btn-sm btn-primary">
-            Login
-          </Link>
+          {/* Right actions */}
+          {isLoading ? (
+            <span className="loading loading-spinner loading-sm" />
+          ) : isLoggedIn ? (
+            <>
+              <span className="hidden sm:inline text-sm text-base-content/70">
+                {session.user?.name || session.user?.email}
+              </span>
+              <button onClick={handleLogout} className="btn btn-sm btn-outline">
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link href="/login" className="btn btn-sm btn-primary">
+              Login
+            </Link>
+          )}
 
           {/* Mobile */}
           <div className="dropdown dropdown-end md:hidden">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-sm">
               ☰
             </div>
+
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-100 rounded-box z-60 mt-3 w-52 p-2 shadow"
+              className="dropdown-content menu bg-base-100 rounded-box z-50 mt-3 w-56 p-2 shadow border border-base-200/50"
             >
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={
-                      isActive(link.href)
-                        ? "font-semibold text-primary"
-                        : "text-base-content"
-                    }
-                  >
-                    {link.label}
-                  </Link>
+              {navLinks.map((link) => {
+                if (link.href === "/add-item" && !isLoggedIn) return null;
+
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className={
+                        isActive(link.href)
+                          ? "font-semibold text-primary"
+                          : "text-base-content"
+                      }
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
+
+              <div className="divider my-1" />
+
+              {isLoading ? (
+                <li>
+                  <span className="loading loading-spinner loading-sm" />
                 </li>
-              ))}
-              <li>
-                <Link href="/login">Login</Link>
-              </li>
+              ) : isLoggedIn ? (
+                <li>
+                  <button onClick={handleLogout}>Logout</button>
+                </li>
+              ) : (
+                <li>
+                  <Link href="/login">Login</Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
