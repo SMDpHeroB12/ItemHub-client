@@ -7,4 +7,9 @@ export const navLinks = [
     label: "Items",
     href: "/items",
   },
+
+  {
+    label: "Add Item",
+    href: "/add-item",
+  },
 ];
