@@ -4,7 +4,8 @@ import Features from "@/components/landing/Features";
 import HowItWorks from "@/components/landing/HowItWorks";
 import FeaturedItems from "@/components/landing/FeaturedItems";
 import Testimonials from "@/components/landing/Testimonials";
-import FaqCta from "@/components/landing/FaqCta";
+
+import FaqCtaClient from "@/components/landing/FaqCtaClient";
 
 export default function HomePage() {
   return (
@@ -15,7 +16,7 @@ export default function HomePage() {
       <HowItWorks />
       <FeaturedItems />
       <Testimonials />
-      <FaqCta />
+      <FaqCtaClient />
     </div>
   );
 }
