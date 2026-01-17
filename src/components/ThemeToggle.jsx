@@ -31,21 +31,21 @@ export default function ThemeToggle() {
       {/* Go to Top */}
       <button
         onClick={scrollToTop}
-        className="btn btn-circle"
+        className="btn btn-circle w-12 h-12"
         title="Go to Top"
         aria-label="Go to top"
       >
-        <FaArrowCircleUp />
+        <FaArrowCircleUp size={25} />
       </button>
 
       {/* Theme Toggle */}
       <button
         onClick={toggleTheme}
-        className="btn btn-circle"
+        className="btn btn-circle w-12 h-12"
         aria-label="Toggle theme"
         title="Toggle Theme"
       >
-        {theme === "light" ? <FaMoon /> : <FaSun />}
+        {theme === "light" ? <FaMoon size={25} /> : <FaSun size={25} />}
       </button>
     </div>
   );

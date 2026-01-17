@@ -7,6 +7,8 @@ import Logo from "./Logo";
 import { signOut, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import { IoMdLogOut } from "react-icons/io";
+import { IoMdLogIn } from "react-icons/io";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -81,12 +83,12 @@ export default function Navbar() {
                 onClick={handleLogout}
                 className="btn btn-sm btn-secondary"
               >
-                Logout
+                Logout <IoMdLogOut size={20} />
               </button>
             </>
           ) : (
             <Link href="/login" className="btn btn-sm btn-primary">
-              Login
+              Login <IoMdLogIn size={20} className="rotate-180 " />
             </Link>
           )}
 

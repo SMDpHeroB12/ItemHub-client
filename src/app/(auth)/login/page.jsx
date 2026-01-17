@@ -75,7 +75,7 @@ export default function LoginPage() {
               name="email"
               type="email"
               className="input input-bordered w-full"
-              placeholder="test@itemhub.com"
+              placeholder="Enter Email"
               required
             />
           </div>
@@ -88,7 +88,7 @@ export default function LoginPage() {
               name="password"
               type="password"
               className="input input-bordered w-full"
-              placeholder="123456"
+              placeholder="Enter Password"
               required
             />
           </div>
