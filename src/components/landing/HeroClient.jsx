@@ -102,7 +102,9 @@ export default function HeroClient({ featured }) {
           <div className="rounded-3xl border border-base-300/40 bg-base-100/70 backdrop-blur shadow-xl p-6">
             <div className="flex items-center justify-between">
               <p className="font-semibold">Featured Item</p>
-              <span className="badge badge-secondary font-bold">Live</span>
+              <span className="badge badge-secondary  font-bold rounded-sm">
+                Live
+              </span>
             </div>
 
             <div className="mt-4 rounded-2xl bg-base-200 p-4">
@@ -149,7 +151,7 @@ export default function HeroClient({ featured }) {
           </div>
 
           <div className="absolute -bottom-4 -right-4 hidden sm:block hero-chip ">
-            <div className="rounded-2xl border border-secondary bg-base-100 shadow  px-4 py-3">
+            <div className="rounded-2xl border border-secondary border-dashed bg-base-100 shadow  px-4 py-3">
               <p className="text-sm font-semibold">Live From DB</p>
               <p className="text-xs text-base-content/70">
                 Latest item preview
