@@ -20,8 +20,15 @@ async function getItem(id) {
   }
 }
 
+function formatDate(value) {
+  if (!value) return "—";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return String(value);
+  return d.toLocaleString();
+}
+
 export async function generateMetadata({ params }) {
-  const { id } = await params; // ✅ unwrap params promise
+  const { id } = await params;
   const item = await getItem(id);
 
   return {
@@ -30,13 +37,16 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ItemDetailsPage({ params }) {
-  const { id } = await params; // ✅ unwrap params promise
+  const { id } = await params;
   const item = await getItem(id);
 
   if (!item) notFound();
 
+  const gallery = Array.isArray(item.images) ? item.images : [];
+
   return (
     <section className="max-w-6xl mx-auto px-4 pb-10 pt-30">
+      {/* Header */}
       <div className="flex items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold">{item.name}</h1>
@@ -51,33 +61,105 @@ export default async function ItemDetailsPage({ params }) {
       </div>
 
       <div className="mt-8 grid lg:grid-cols-2 gap-6">
-        <div className="rounded-3xl bg-base-100 border border-base-300/40 shadow-sm overflow-hidden">
-          {item.image ? (
-            <Image
-              width={500}
-              height={500}
-              src={item.image}
-              alt={item.name}
-              className="w-full h-90 object-contain"
-            />
-          ) : (
-            <div className="w-full h-90 bg-base-200" />
-          )}
+        {/* LEFT: Main image + Gallery */}
+        <div className="space-y-4">
+          <div className="rounded-3xl bg-base-100 border border-base-300/40 shadow-sm overflow-hidden">
+            {item.image ? (
+              <Image
+                width={900}
+                height={900}
+                src={item.image}
+                alt={item.name}
+                className="w-full h-96 object-contain"
+                unoptimized
+                priority
+              />
+            ) : (
+              <div className="w-full h-96 bg-base-200" />
+            )}
+          </div>
+
+          {/* Gallery */}
+          <div className="rounded-3xl bg-base-100 border border-base-300/40 shadow-sm p-4">
+            <div className="flex items-center justify-between">
+              <p className="font-semibold">Gallery</p>
+              <span className="text-xs text-base-content/60">
+                {gallery.length} image{gallery.length === 1 ? "" : "s"}
+              </span>
+            </div>
+
+            {gallery.length === 0 ? (
+              <p className="mt-3 text-sm text-base-content/70">
+                No extra images found.
+              </p>
+            ) : (
+              <div className="mt-3 grid grid-cols-3 sm:grid-cols-4 gap-3">
+                {gallery.map((url, idx) => (
+                  <div
+                    key={`${url}-${idx}`}
+                    className="rounded-2xl border border-base-300/40 bg-base-200/30 overflow-hidden"
+                    title={`Image ${idx + 1}`}
+                  >
+                    <Image
+                      width={300}
+                      height={300}
+                      src={url}
+                      alt={`${item.name} ${idx + 1}`}
+                      className="w-full h-20 object-cover"
+                      unoptimized
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
+        {/* RIGHT: All details */}
         <div className="rounded-3xl bg-base-100 border border-base-300/40 shadow-sm p-6">
           <div className="flex items-center justify-between">
             <span className="badge badge-primary badge-outline">Details</span>
             <p className="text-2xl font-extrabold">${item.price}</p>
           </div>
 
-          <div className="mt-4">
+          {/* Category / Subcategory */}
+          <div className="mt-4 flex flex-wrap gap-2">
+            {item.category ? (
+              <span className="badge badge-outline">{item.category}</span>
+            ) : (
+              <span className="badge badge-ghost">No category</span>
+            )}
+
+            {item.subCategory ? (
+              <span className="badge badge-outline">{item.subCategory}</span>
+            ) : null}
+          </div>
+
+          {/* Description */}
+          <div className="mt-5">
             <h2 className="font-semibold text-lg">Description</h2>
             <p className="mt-2 text-sm text-base-content/70 leading-relaxed">
               {item.description || "No description provided."}
             </p>
           </div>
 
+          {/* Tags */}
+          <div className="mt-6">
+            <p className="font-semibold">Tags</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {Array.isArray(item.tags) && item.tags.length > 0 ? (
+                item.tags.map((t) => (
+                  <span key={t} className="badge badge-outline">
+                    {t}
+                  </span>
+                ))
+              ) : (
+                <p className="text-sm text-base-content/70">No tags</p>
+              )}
+            </div>
+          </div>
+
+          {/* Meta info */}
           <div className="mt-6 grid sm:grid-cols-2 gap-3 text-sm">
             <div className="rounded-2xl bg-base-200/60 p-4">
               <p className="text-base-content/60">Item ID</p>
@@ -85,11 +167,22 @@ export default async function ItemDetailsPage({ params }) {
             </div>
 
             <div className="rounded-2xl bg-base-200/60 p-4">
+              <p className="text-base-content/60">Created At</p>
+              <p className="font-medium">{formatDate(item.createdAt)}</p>
+            </div>
+
+            <div className="rounded-2xl bg-base-200/60 p-4">
               <p className="text-base-content/60">Status</p>
               <p className="font-medium">Available</p>
             </div>
+
+            <div className="rounded-2xl bg-base-200/60 p-4">
+              <p className="text-base-content/60">Main Image</p>
+              <p className="font-medium">{item.image ? "Yes" : "No"}</p>
+            </div>
           </div>
 
+          {/* Actions */}
           <div className="mt-6 flex flex-wrap gap-3">
             <Link href="/items" className="btn btn-outline">
               Browse More
