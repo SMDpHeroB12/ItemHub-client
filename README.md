@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ItemHub – Client
 
-## Getting Started
+## 📌 Short Project Description
 
-First, run the development server:
+ItemHub is a modern, responsive item listing application where users can browse items publicly, view full item details, and securely add new items after authentication.  
+The client focuses on clean UI, light/dark mode compatibility, smooth animations, and real-world authentication & image upload flows.
+
+---
+
+## 🌐 Live Client
+
+https://item-hub-client.vercel.app
+
+---
+
+## ⚙️ Setup & Installation Instructions
+
+### Prerequisites
+
+- Node.js (LTS)
+- npm
+
+### Installation Steps
+
+```bash
+git clone https://github.com/SMDpHeroB12/ItemHub-client.git
+cd ItemHub-client
+npm install
+```
+
+### Run the Project
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Client runs on: http://localhost:3000
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧭 Route Summary
 
-## Learn More
+| Route         | Description              |
+| ------------- | ------------------------ |
+| `/`           | Home page                |
+| `/items`      | Public item listing      |
+| `/items/[id]` | Item details page        |
+| `/add-item`   | Add new item (protected) |
+| `/login`      | Login page               |
+| `/api/auth/*` | NextAuth routes          |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✅ Implemented Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Public item listing
+- Item details with full data view
+- Secure authentication (Credentials & Google)
+- Protected add-item route
+- Image upload from local device
+- Instant image preview before upload
+- Secure server-side ImgBB upload
+- Light / Dark mode toggle
+- Fully responsive UI
+- GSAP-based subtle animations
+- Toast & modal notifications
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧠 Brief Feature Explanation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Authentication:**  
+  Implemented using NextAuth.js with Credentials and Google providers.
+
+- **Image Upload:**  
+  Images are selected locally, previewed instantly, uploaded to the server, and then forwarded securely to ImgBB.
+
+- **Protected Routes:**  
+  Only authenticated users can access the Add Item page.
+
+- **UI & UX:**  
+  Tailwind CSS, DaisyUI, and GSAP ensure a clean, modern, and smooth user experience.
+
+---
+
+## 👨‍💻 Author
+
+SHEKH MD NAYEM YOUSUF
