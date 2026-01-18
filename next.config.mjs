@@ -2,7 +2,12 @@
 const nextConfig = {
   /* config options here */
   images: {
-    domains: ["i.ibb.co.com", "lh3.googleusercontent.com"],
+    remotePatterns: [
+      { protocol: "https", hostname: "i.ibb.co.com" },
+      { protocol: "https", hostname: "i.ibb.co" },
+      { protocol: "https", hostname: "ibb.co" },
+      { protocol: "https", hostname: "lh3.googleusercontent.com" },
+    ],
   },
 };
 
